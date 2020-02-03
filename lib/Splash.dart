@@ -28,11 +28,11 @@ class InitScreen extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Center(
-              child: Text('Beautybliss by divs!', style: TextStyle(fontSize: 20.0)),
+              child: Text('Beautybliss by divs!', style: TextStyle(fontSize: 32.0, fontFamily: 'Srisakdi')),
             ), flex: 12,
           ),
           Expanded(
-            child: Text('Divya - Makeup & Hair!', style: TextStyle(fontSize: 11.0)),
+            child: Text('Divya - Makeup & Hair!', style: TextStyle(fontSize: 22.0, fontFamily: 'Lovers Quarrel')),
             flex: 1,
           )
         ],
