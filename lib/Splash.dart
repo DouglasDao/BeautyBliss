@@ -35,9 +35,7 @@ class InitScreen extends State {
     Future.delayed(const Duration(seconds: 3), () =>
         Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) =>
-                Dashboard()
-            )
+            MaterialPageRoute(builder: (context) => Dashboard())
         )
     );
   }
@@ -51,12 +49,12 @@ class InitScreen extends State {
         children: <Widget>[
           Expanded(
             child: Center(
-              child: _setText('Beautyblissbydivs', 'Srisakdi')
+                child: _setText('Beautyblissbydivs', 32.0, 'Srisakdi')
             ),
             flex: 12,
           ),
           Expanded(
-            child: _setText('Divya - Makeup & Hair!', 'Lovers Quarrel'),
+            child: _setText('Divya - Makeup & Hair!', 22.0, 'Lovers Quarrel'),
             flex: 1,
           )
         ],
@@ -64,7 +62,7 @@ class InitScreen extends State {
     );
   }
 
-  Widget _setText(String text, String fontFamily) {
-    return Text(text, style: TextStyle(fontSize: 32.0, fontFamily: fontFamily));
+  Widget _setText(String text, double size, String fontFamily) {
+    return Text(text, style: TextStyle(fontSize: size, fontFamily: fontFamily));
   }
 }
