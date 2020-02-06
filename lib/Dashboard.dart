@@ -27,8 +27,7 @@ class DashboardStateFul extends State<Dashboard> {
         backgroundColor: Color(0xFF212121)
     ),
 
-      body: _isDashOrBookingDetails(_tabPos),
-
+      body: _isDashOrBookingDetailsView(_tabPos),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -37,7 +36,7 @@ class DashboardStateFul extends State<Dashboard> {
           onPressed: () {
             BeautyBlissUtils(mContext: context).startWidget(NewBooking());
           },
-          elevation: 2.0,
+          elevation: 24.0,
       ),
 
       bottomNavigationBar: BottomAppBar(
@@ -47,27 +46,19 @@ class DashboardStateFul extends State<Dashboard> {
           children: <Widget>[
             IconButton(
               icon: Icon(Icons.dashboard),
-              padding: EdgeInsets.fromLTRB(32.0, 0, 0, 0),
+              padding: EdgeInsets.fromLTRB(32.0, 0, 32.0, 0),
               color: _setColorForDashboard(_tabPos),
-              onPressed: () {
-                setState(){
-                  this._tabPos = 0;
-                }
-              },
+              onPressed: () => _itemTapped(0)
             ),
             IconButton(
               icon: Icon(Icons.details),
-              padding: EdgeInsets.fromLTRB(0, 0, 32.0, 0),
+              padding: EdgeInsets.fromLTRB(32.0, 0, 32.0, 0),
               color: _setColorForBookingDetails(_tabPos),
-              onPressed: () {
-                setState(){
-                  this._tabPos = 1;
-                }
-              },
+              onPressed: () => _itemTapped(1)
             ),
           ],
         )
-      ),
+      )
     );
   }
 
@@ -84,31 +75,11 @@ class DashboardStateFul extends State<Dashboard> {
   }
 
   MaterialColor _setColorForDashboard(int pos) {
-    if (pos == 0) {
-        return Colors.lightBlue;
-    } else {
-        return Colors.grey;
-    }
+    return pos == 0 ? Colors.lightBlue : Colors.grey;
   }
 
   MaterialColor _setColorForBookingDetails(int pos) {
-    if (pos == 1) {
-      return Colors.lightBlue;
-    } else {
-      return Colors.grey;
-    }
-  }
-
-
-
-  Widget _isDashOrBookingDetails(int tabPos) {
-    if (tabPos == 0) {
-      return _dashboardLayout();
-    } else if (tabPos == 1) {
-      return Container(
-        child: Text('Booking Details'),
-      );
-    }
+    return pos == 1 ? Colors.lightBlue : Colors.grey;
   }
 
   Widget _BookDetailsLayout(){
@@ -122,7 +93,14 @@ class DashboardStateFul extends State<Dashboard> {
     return index == 0 ? Icons.dashboard : Icons.details;
   }
 
-  int getIndex(int index) {
-    return index == 0 ? 0 : 1;
+  Widget _isDashOrBookingDetailsView(int tabPos) {
+    if (tabPos == 0) {
+      return _dashboardLayout();
+    } else if (tabPos == 1) {
+      return Container(
+        child: Text('Booking Details'),
+      );
+    }
+    return _dashboardLayout();
   }
 }

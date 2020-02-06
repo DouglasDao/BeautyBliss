@@ -1,3 +1,4 @@
+import 'package:beautybliss/BeautyBlissUtils.dart';
 import 'package:beautybliss/Dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -33,10 +34,7 @@ class InitScreen extends State {
     super.initState();
     debugPrint("initState==========");
     Future.delayed(const Duration(seconds: 3), () =>
-        Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Dashboard())
-        )
+        BeautyBlissUtils(mContext: context).startWidget(Dashboard())
     );
   }
 
