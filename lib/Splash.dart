@@ -2,8 +2,12 @@ import 'package:beautybliss/BeautyBlissUtils.dart';
 import 'package:beautybliss/Dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(Splash());
+void main() {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  runApp(Splash());
+}
 
 class Splash extends StatelessWidget {
   @override
@@ -13,9 +17,10 @@ class Splash extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark().copyWith(
           primaryColor: Color(0xFF0A0E21),
-          scaffoldBackgroundColor: Color(0xFF0A0E21),
+          scaffoldBackgroundColor: Color(0xFF000000),
         ),
         home: Scaffold(
+          backgroundColor: Color(0xFF0A0E21),
           body: InitScreenStateFul(),
         ));
   }

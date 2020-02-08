@@ -18,20 +18,20 @@ class DashboardStateFul extends State<Dashboard> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-
-      appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(getAppBarIcon(_tabPos), color: Colors.lightBlue), onPressed: null,
-        ),
-        title: Text(getAppBarTitle(_tabPos)),
-        backgroundColor: Color(0xFF212121)
-    ),
+      backgroundColor: Color(0xFF000000),
+        appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(getAppBarIcon(_tabPos), color: Colors.lightBlue), onPressed: null,
+          ),
+          title: Text(getAppBarTitle(_tabPos)),
+            backgroundColor: Color(0xAB581d4c)
+      ),
 
       body: _isDashOrBookingDetailsView(_tabPos),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-          backgroundColor: Color(0xFF880E4F),
+          backgroundColor: Color(0xFF841d58),
           child: Icon(Icons.add, color: Colors.black),
           onPressed: () {
             BeautyBlissUtils(mContext: context).startWidget(NewBooking());
@@ -40,6 +40,7 @@ class DashboardStateFul extends State<Dashboard> {
       ),
 
       bottomNavigationBar: BottomAppBar(
+
         shape: CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
