@@ -5,7 +5,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(Splash());
 }
 
@@ -36,6 +35,7 @@ class InitScreenStateFul extends StatefulWidget {
 class InitScreen extends State {
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     super.initState();
     debugPrint("initState==========");
     Future.delayed(const Duration(seconds: 3), () =>
