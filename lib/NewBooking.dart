@@ -25,7 +25,7 @@ class NewBookingState extends State<NewBooking> {
     receptionDateTimeController = TextEditingController();
     weddingDateTimeController = TextEditingController();
     dateTimeTextEditController.text = 'Date & Time ?';
-    eventTypeTextEditController.text = 'Choose Event ?';
+    eventTypeTextEditController.text = 'Select Event';
     receptionDateTimeController.text = 'Reception Date & Time ?';
     weddingDateTimeController.text = 'Wedding Date & Time ?';
     super.initState();
@@ -63,7 +63,7 @@ class NewBookingState extends State<NewBooking> {
                     children: <Widget>[
 
                       // Bride Name
-                      _setTextFormFieldWidget(null,null, Colors.grey, TextInputType.text, TextInputAction.next, TextStyle(color: Colors.white, fontSize: 16), null,
+                      _setTextFormFieldWidget(null,null,false,true, Colors.grey, TextInputType.text, TextInputAction.next, TextStyle(color: Colors.white, fontSize: 16), null,
                           _setInputDecoration(true, Colors.white10, 'Bride name', 'Who is Bride ?',
                               UnderlineInputBorder(borderSide: BorderSide(color: Colors.lightBlue)),
                               UnderlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
@@ -72,8 +72,8 @@ class NewBookingState extends State<NewBooking> {
                       SizedBox(height: 12.0),
 
                       // Event Type
-                      _setTextFormFieldWidget(eventTypeTextEditController,AlwaysDisabledFocusNode(), Colors.grey, null, null, TextStyle(color: Colors.white, fontSize: 16), null,
-                          _setInputDecoration(true, Colors.white10, 'Choose Event ?', eventTypeTextEditController.text,
+                      _setTextFormFieldWidget(null,null,true,false, Colors.grey, null, null, TextStyle(color: Colors.white, fontSize: 16), null,
+                          _setInputDecoration(true, Colors.white10, eventTypeTextEditController.text, 'Event ?',
                               UnderlineInputBorder(borderSide: BorderSide(color: Colors.lightBlue)),
                               UnderlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
                               Icon(Icons.event_seat, color: Colors.grey)), _onEventTypeTapped),
@@ -81,7 +81,7 @@ class NewBookingState extends State<NewBooking> {
                       Container(child: receptionWeddingState ? null : SizedBox(height: 12.0)),
 
                       // Date & Time
-                      Container(child: receptionWeddingState ? null : _setTextFormFieldWidget(dateTimeTextEditController,AlwaysDisabledFocusNode(), Colors.grey, null, null, null, null,
+                      Container(child: receptionWeddingState ? null : _setTextFormFieldWidget(dateTimeTextEditController,null,false,false, Colors.grey, null, null, null, null,
                               _setInputDecoration(true, Colors.white10, '', dateTimeTextEditController.text, null,
                                   UnderlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
                                   Icon(Icons.date_range, color: Colors.grey)), _onDateTimeTapped)
@@ -90,18 +90,16 @@ class NewBookingState extends State<NewBooking> {
                       Container(child: receptionWeddingState ? SizedBox(height: 12.0) : null),
 
                       // Reception Date & Time
-                      Container(child: receptionWeddingState ? _setTextFormFieldWidget(receptionDateTimeController,AlwaysDisabledFocusNode(), Colors.grey, null, null, null, null,
+                      Container(child: receptionWeddingState ? _setTextFormFieldWidget(receptionDateTimeController,null,false,false, Colors.grey, null, null, null, null,
                             _setInputDecoration(true, Colors.white10, '', receptionDateTimeController.text, null,
                                 UnderlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
                                 Icon(Icons.receipt, color: Colors.grey)), _onReceptionDateTimeTapped) : null
                       ),
 
-
                       Container(child: receptionWeddingState ? SizedBox(height: 12.0) : null),
 
                       // Wedding Date & Time
-                      Container(
-                        child: receptionWeddingState ? _setTextFormFieldWidget(weddingDateTimeController,AlwaysDisabledFocusNode(), Colors.grey, null, null, null, null,
+                      Container(child: receptionWeddingState ? _setTextFormFieldWidget(weddingDateTimeController,null,false,false, Colors.grey, null, null, null, null,
                               _setInputDecoration(true, Colors.white10, '', weddingDateTimeController.text, null,
                                   UnderlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
                                   Icon(Icons.event, color: Colors.grey)), _onWeddingDateTimeTapped)  : null
@@ -110,7 +108,7 @@ class NewBookingState extends State<NewBooking> {
                       SizedBox(height: 12.0),
 
                       // Venue
-                      _setTextFormFieldWidget(null, null, Colors.grey, TextInputType.text, TextInputAction.next, TextStyle(color: Colors.white, fontSize: 16), null,
+                      _setTextFormFieldWidget(null, null,false,true, Colors.grey, TextInputType.text, TextInputAction.next, TextStyle(color: Colors.white, fontSize: 16), null,
                           _setInputDecoration(true, Colors.white10, 'Venue', 'Where venue located ?',
                               UnderlineInputBorder(borderSide: BorderSide(color: Colors.lightBlue)),
                               UnderlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
@@ -181,10 +179,10 @@ class NewBookingState extends State<NewBooking> {
     );
   }
 
-  TextFormField _setTextFormFieldWidget(TextEditingController controller,FocusNode focusNode,Color cursorColor, TextInputType keyboardType, TextInputAction textInputAction,
+  TextFormField _setTextFormFieldWidget(TextEditingController controller,FocusNode focusNode,bool readOnly,bool showCursor,Color cursorColor, TextInputType keyboardType, TextInputAction textInputAction,
       TextStyle style, int maxLength, InputDecoration decoration, GestureTapCallback onTap) {
 
-    return TextFormField(cursorColor: cursorColor,focusNode: focusNode, keyboardType: keyboardType,
+    return TextFormField(cursorColor: cursorColor,focusNode: focusNode,readOnly: readOnly, showCursor: showCursor, keyboardType: keyboardType,
         textInputAction: textInputAction, style: style, maxLength: maxLength, decoration: decoration, onTap: onTap);
   }
 
