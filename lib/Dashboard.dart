@@ -1,8 +1,12 @@
-import 'package:beautybliss/BeautyBlissUtils.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import 'NewBooking.dart';
+import 'package:beautybliss/BeautyBlissUtils.dart';
+import 'package:beautybliss/BookingDetails.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:month_picker_strip/month_picker_strip.dart';
+
+import 'model/Booking.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -14,13 +18,16 @@ class Dashboard extends StatefulWidget {
 class DashboardStateFul extends State<Dashboard> {
 
   int _tabPos = 0;
+  String selectedMonth = DateFormat.yMMMM().format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
+
       backgroundColor: Color(0xFF000000),
-        appBar: AppBar(
+
+      appBar: AppBar(
           leading: IconButton(
               icon: Icon(getAppBarIcon(_tabPos), color: Colors.lightBlue), onPressed: null,
           ),
@@ -34,14 +41,11 @@ class DashboardStateFul extends State<Dashboard> {
       floatingActionButton: FloatingActionButton(
           backgroundColor: Color(0xFF841d58),
           child: Icon(Icons.add, color: Colors.black),
-          onPressed: () {
-            BeautyBlissUtils(mContext: context).startWidget(NewBooking());
-          },
+          onPressed: () => startNewBooking(),
           elevation: 24.0,
       ),
 
       bottomNavigationBar: BottomAppBar(
-
         shape: CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,10 +68,95 @@ class DashboardStateFul extends State<Dashboard> {
     );
   }
 
-  Widget _dashboardLayout() {
-    return Scaffold(
+  Future startNewBooking() async {
+    await BeautyBlissUtils(mContext: context).routeResultWidget("/NewBooking");
+    setState(() {
+      _dashboardLayout();
+    });
+  }
 
+  Widget _dashboardLayout() {
+    print("Selected Month : $selectedMonth");
+
+    var bookingMap = BeautyBlissUtils.getListOfBookings(selectedMonth);
+
+    return Container(
+        child: Column(
+            children: <Widget>[
+
+              MonthStrip(
+                normalTextStyle: TextStyle(color: Colors.white30),
+                selectedTextStyle: TextStyle(color: Colors.white),
+                format: 'MMM yyyy',
+                from: DateTime(DateTime.now().year, DateTime.now().month),
+                to: DateTime(2030, 12),
+                initialMonth: DateTime(DateTime.now().year, DateTime.now().month),
+                viewportFraction: 0.25,
+                physics: PageScrollPhysics(),
+                onMonthChanged: (dateTime) {
+                  setState(() {
+                    selectedMonth = DateFormat.yMMMM().format(dateTime);
+                  });
+                },
+              ),
+
+              Expanded(child: FutureBuilder<List<Booking>>(
+                  future: bookingMap,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.none || snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+
+                    } else {
+                      print(snapshot.data.length);
+                      if (snapshot.hasData && snapshot.data.length > 0) {
+                        return ListView.builder(
+                          padding: const EdgeInsets.all(8),
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, int index) {
+
+                            String brideName = snapshot.data[index].brideName;
+                            String eventType = snapshot.data[index].eventType;
+                            String receptionDateTime = snapshot.data[index].receptionDateTime;
+                            String weddingDateTime = snapshot.data[index].weddingDateTime;
+                            String otherEventDateTime = snapshot.data[index].otherEventDateTime;
+
+                            return Card(
+                              color: Colors.white10,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  ListTile(
+                                    contentPadding: const EdgeInsets.all(8.0),
+                                    leading: Icon(Icons.event, size: 35, color: Colors.grey),
+                                    title: Padding(padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 8.0), child: Text(brideName)),
+                                    subtitle: eventType == "Reception & Muhurtham"
+                                        ? Text(eventType + '\n' + receptionDateTime + " | " + weddingDateTime, textAlign: TextAlign.start, style: TextStyle(fontSize: 12.0))
+                                        : Text(eventType + '\n' + otherEventDateTime, textAlign: TextAlign.start, style: TextStyle(fontSize: 12.0)),
+                                    onTap: () {
+                                      BeautyBlissUtils(mContext: context).materialRouteWidget(BookingDetails(), snapshot.data[index]);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      } else {
+                        return Center(
+                          child: Text("No Data Available!"),
+                        );
+                      }
+                    }
+                  }
+              )
+
+              )
+            ]
+        )
     );
+  }
+
+  Widget _BookDetailsLayout(){
   }
 
   void _itemTapped(int pos) {
@@ -82,9 +171,6 @@ class DashboardStateFul extends State<Dashboard> {
 
   MaterialColor _setColorForBookingDetails(int pos) {
     return pos == 1 ? Colors.lightBlue : Colors.grey;
-  }
-
-  Widget _BookDetailsLayout(){
   }
 
   String getAppBarTitle(int index){
