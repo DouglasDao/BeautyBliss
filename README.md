@@ -1,6 +1,6 @@
 # beautybliss
 
-A new Flutter application.
+A new Exclusive Booking Application in Flutter for Beauticians.
 
 ## Getting Started
 
