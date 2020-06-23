@@ -6,6 +6,11 @@ import 'package:flutter/material.dart';
 import 'BeautyBlissUtils.dart';
 import 'model/Booking.dart';
 
+/**
+ * Author: Douglas BR
+ * Date: 23 Jun 2020
+ */
+
 class BookingDetails extends StatelessWidget {
 
   @override
@@ -38,7 +43,7 @@ class BookingDetails extends StatelessWidget {
             leading: IconButton(
                 icon: Icon(Icons.close, color: Colors.white),
                 onPressed: () => BeautyBlissUtils(mContext: context).finish()),
-            title: Text("Booking Details"),
+            title: BeautyBlissUtils(mContext: context).setText("Booking Details", 32.0, 'Lovers Quarrel'),
             backgroundColor: Color(0xAB581d4c)),
 
         body: Padding(

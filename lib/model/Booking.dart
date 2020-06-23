@@ -1,3 +1,8 @@
+/**
+ * Author: Douglas BR
+ * Date: 23 Jun 2020
+ */
+
 class Booking {
 
   final String brideName, eventType, receptionDateTime, weddingDateTime, otherEventDateTime, receptionMonth, weddingMonth, otherEventMonth, venue, hairStylist, description;

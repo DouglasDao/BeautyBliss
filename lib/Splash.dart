@@ -5,6 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
+/**
+ * Author: Douglas BR
+ * Date: 23 Jun 2020
+ */
+
 void main() {
   runApp(Splash());
 }
@@ -58,12 +63,12 @@ class InitScreen extends State {
         children: <Widget>[
           Expanded(
             child: Center(
-                child: _setText('Beautyblissbydivs', 32.0, 'Srisakdi')
+                child: BeautyBlissUtils(mContext: context).setText('Beautyblissbydivs', 32.0, 'Srisakdi')
             ),
             flex: 12,
           ),
           Expanded(
-            child: _setText('Divya - Makeup & Hair!', 22.0, 'Lovers Quarrel'),
+            child: BeautyBlissUtils(mContext: context).setText('Divya - Makeup & Hair!', 22.0, 'Lovers Quarrel'),
             flex: 1,
           )
         ],
@@ -71,7 +76,5 @@ class InitScreen extends State {
     );
   }
 
-  Widget _setText(String text, double size, String fontFamily) {
-    return Text(text, style: TextStyle(fontSize: size, fontFamily: fontFamily));
-  }
+
 }

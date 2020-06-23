@@ -8,6 +8,11 @@ import 'package:month_picker_strip/month_picker_strip.dart';
 
 import 'model/Booking.dart';
 
+/**
+ * Author: Douglas BR
+ * Date: 23 Jun 2020
+ */
+
 class Dashboard extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -27,15 +32,15 @@ class DashboardStateFul extends State<Dashboard> {
 
       backgroundColor: Color(0xFF000000),
 
-      appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(getAppBarIcon(_tabPos), color: Colors.lightBlue), onPressed: null,
-          ),
-          title: Text(getAppBarTitle(_tabPos)),
-            backgroundColor: Color(0xAB581d4c)
-      ),
+        appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(getAppBarIcon(_tabPos), color: Colors.lightBlue),
+              onPressed: null,
+            ),
+            title: BeautyBlissUtils(mContext: context).setText(getAppBarTitle(_tabPos), 32.0, 'Lovers Quarrel'),
+            backgroundColor: Color(0xAB581d4c)),
 
-      body: _isDashOrBookingDetailsView(_tabPos),
+        body: _isDashOrBookingDetailsView(_tabPos),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -85,8 +90,8 @@ class DashboardStateFul extends State<Dashboard> {
             children: <Widget>[
 
               MonthStrip(
-                normalTextStyle: TextStyle(color: Colors.white30),
-                selectedTextStyle: TextStyle(color: Colors.white),
+                normalTextStyle: TextStyle(color: Colors.white30, fontFamily: 'Srisakdi'),
+                selectedTextStyle: TextStyle(color: Colors.white, fontFamily: 'Srisakdi'),
                 format: 'MMM yyyy',
                 from: DateTime(DateTime.now().year, DateTime.now().month),
                 to: DateTime(2030, 12),
@@ -107,7 +112,6 @@ class DashboardStateFul extends State<Dashboard> {
                       return Center(child: CircularProgressIndicator());
 
                     } else {
-                      print(snapshot.data.length);
                       if (snapshot.hasData && snapshot.data.length > 0) {
                         return ListView.builder(
                           padding: const EdgeInsets.all(8),
@@ -143,7 +147,7 @@ class DashboardStateFul extends State<Dashboard> {
                         );
                       } else {
                         return Center(
-                          child: Text("No Data Available!"),
+                          child: BeautyBlissUtils(mContext: context).setText("No Bookings Found!", 20.0, 'Srisakdi')
                         );
                       }
                     }

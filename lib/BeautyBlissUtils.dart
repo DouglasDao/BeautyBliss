@@ -5,6 +5,11 @@ import 'package:sqflite/sqflite.dart';
 
 import 'model/Booking.dart';
 
+/**
+ * Author: Douglas BR
+ * Date: 23 Jun 2020
+ */
+
 class BeautyBlissUtils {
   BuildContext mContext;
 
@@ -42,6 +47,10 @@ class BeautyBlissUtils {
         backgroundColor: Color(0xAB581d4c),
         behavior: SnackBarBehavior.fixed,
         content: Text(msg, style: TextStyle(color: Colors.white))));
+  }
+
+  Widget setText(String text, double size, String fontFamily) {
+    return Text(text, style: TextStyle(fontSize: size, fontFamily: fontFamily));
   }
 
   Future<void> showOkAlert(String msg, OkAlertCallback mAlertCallback) async {
@@ -114,7 +123,7 @@ class BeautyBlissUtils {
     Navigator.pop(mContext);
   }
 
-  void finishWithResult(dynamic result){
+  void finishWithResult(dynamic result) {
     Navigator.pop(mContext, result);
   }
 }

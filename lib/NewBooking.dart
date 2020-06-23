@@ -7,6 +7,10 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import "package:intl/intl.dart";
 import 'package:sqflite/sqflite.dart';
 
+/**
+ * Author: Douglas BR
+ * Date: 23 Jun 2020
+ */
 
 class NewBooking extends StatefulWidget {
   @override
@@ -61,7 +65,7 @@ class NewBookingState extends State<NewBooking> {
                 icon: Icon(Icons.close, color: Colors.white),
                 onPressed: () => BeautyBlissUtils(mContext: context).finishWithResult("")
             ),
-            title: Text("New Booking"),
+            title: BeautyBlissUtils(mContext: context).setText("New Booking", 32.0, 'Lovers Quarrel'),
             backgroundColor: Color(0xAB581d4c)
         ),
 
@@ -174,7 +178,7 @@ class NewBookingState extends State<NewBooking> {
                         children: <Widget>[
                           CupertinoButton(
                             borderRadius: BorderRadius.circular(8.0), color: Color(0xAB581d4c), padding: EdgeInsets.fromLTRB(48.0, 0.0, 48.0, 0.0),
-                            onPressed: _onSubmitNewBookingForm, child: Text("Submit"),
+                            onPressed: _onSubmitNewBookingForm, child: BeautyBlissUtils(mContext: context).setText('Submit', 18.0, 'Srisakdi'),
                           ),
                         ])
                     ],
@@ -233,7 +237,7 @@ class NewBookingState extends State<NewBooking> {
 
   Widget _setEventTypeCupertinoSheet(BuildContext context, String actionSheetText,bool state) {
 
-    return CupertinoActionSheetAction(child: Text(actionSheetText, style: TextStyle(color: Colors.blue, fontSize: 16)),
+    return CupertinoActionSheetAction(child: Text(actionSheetText, style: TextStyle(color: Colors.blue, fontSize: 16, fontFamily: 'Srisakdi')),
         onPressed: () {
           dateTimeShow = true;
           eventTypeController.text = actionSheetText;
@@ -380,7 +384,7 @@ class NewBookingState extends State<NewBooking> {
   TextFormField _setBasicTextFormFieldWidget(TextEditingController textEditingController, bool isReadOnly, TextInputType inputType, TextInputAction inputAction,
       int textMaxLines, TextStyle textStyle, FocusNode currFocusNode, FocusNode nextFocusNode, GestureTapCallback onTapped, InputDecoration inputDecoration) {
 
-    return TextFormField(controller: textEditingController, readOnly: isReadOnly, keyboardType: inputType, textInputAction: inputAction, maxLines: textMaxLines, style: textStyle,
+    return TextFormField(controller: textEditingController, readOnly: isReadOnly, keyboardType: inputType, textInputAction: inputAction, maxLines: textMaxLines, style: TextStyle(fontFamily: 'Srisakdi'),
       focusNode: currFocusNode, onFieldSubmitted:(term){ _fieldFocusChange(context, currFocusNode, nextFocusNode);}, onTap: onTapped, decoration: inputDecoration);
   }
 
@@ -432,7 +436,7 @@ class NewBookingState extends State<NewBooking> {
 class AlertEvent implements OkAlertCallback {
   @override
   void onOk(BuildContext context) {
-    BeautyBlissUtils(mContext: context).finishWithResult("refreshDashboard");
+    BeautyBlissUtils(mContext: context).finishWithResult("");
   }
 }
 

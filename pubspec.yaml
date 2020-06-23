@@ -68,7 +68,7 @@ flutter:
          - asset: fonts/Caveat-Regular.ttf
      - family: Dancing Script
        fonts:
-         - asset: fonts/DancingScript-VariableFont_wght.ttf
+         - asset: fonts/DancingScript.ttf
      - family: MrsSaintDelafield
        fonts:
          - asset: fonts/MrsSaintDelafield-Regular.ttf
