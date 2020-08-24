@@ -10,10 +10,6 @@ import 'package:flutter/services.dart';
  * Date: 23 Jun 2020
  */
 
-void main() {
-  runApp(Splash());
-}
-
 class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -50,13 +46,12 @@ class InitScreen extends State {
     super.initState();
     debugPrint("initState==========");
     Future.delayed(const Duration(seconds: 3), () =>
-        BeautyBlissUtils(mContext: context).routeWidget(Dashboard())
+        BeautyBlissUtils(mContext: context).routeWidgetWithSlide(Dashboard())
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("build==========");
     return Container(
       margin: EdgeInsets.all(12.0),
       child: Column(
@@ -75,6 +70,4 @@ class InitScreen extends State {
       ),
     );
   }
-
-
 }

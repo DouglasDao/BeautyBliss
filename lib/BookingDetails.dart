@@ -54,8 +54,9 @@ class BookingDetails extends StatelessWidget {
                 return Column(
                   children: <Widget>[
                     ListTile(
-                        leading: Text(bookingDetailsList.keys.elementAt(index)),
-                        trailing: Text(bookingDetailsList.values.elementAt(index))),
+                        leading: BeautyBlissUtils(mContext: context).setText(bookingDetailsList.keys.elementAt(index), 14.0, 'Srisakdi'),
+                        trailing: BeautyBlissUtils(mContext: context).setText(bookingDetailsList.values.elementAt(index), 14.0, 'Srisakdi')
+                    )
                   ],
                 );
               },

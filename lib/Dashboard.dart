@@ -1,11 +1,11 @@
-
 import 'package:beautybliss/BeautyBlissUtils.dart';
 import 'package:beautybliss/BookingDetails.dart';
+import 'package:beautybliss/NewBooking.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:month_picker_strip/month_picker_strip.dart';
-
+import 'package:rect_getter/rect_getter.dart';
 import 'model/Booking.dart';
 
 /**
@@ -21,63 +21,99 @@ class Dashboard extends StatefulWidget {
 }
 
 class DashboardStateFul extends State<Dashboard> {
-
+  final Duration animationDuration = Duration(milliseconds: 1000);
+  final Duration delay = Duration(milliseconds: 10);
+  GlobalKey rectGetterKey = RectGetter.createGlobalKey();
+  Rect rect;
   int _tabPos = 0;
   String selectedMonth = DateFormat.yMMMM().format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
 
-    return Scaffold(
+        Scaffold(
+            backgroundColor: Color(0xFF000000),
 
-      backgroundColor: Color(0xFF000000),
+            appBar: AppBar(
+                leading: IconButton(
+                  icon: Icon(getAppBarIcon(_tabPos), color: Colors.lightBlue),
+                  onPressed: null,
+                ),
+                title: BeautyBlissUtils(mContext: context).setText(
+                    getAppBarTitle(_tabPos), 32.0, 'Lovers Quarrel'),
+                backgroundColor: Color(0xAB581d4c)),
 
-        appBar: AppBar(
-            leading: IconButton(
-              icon: Icon(getAppBarIcon(_tabPos), color: Colors.lightBlue),
-              onPressed: null,
+            body: _isDashOrBookingDetailsView(_tabPos),
+
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+            floatingActionButton: RectGetter(
+              key: rectGetterKey,
+              child: FloatingActionButton(
+                backgroundColor: Color(0xFF841d58),
+                child: Icon(Icons.add, color: Colors.black),
+                onPressed: _onFabTap,
+                elevation: 24.0,
+              ),
             ),
-            title: BeautyBlissUtils(mContext: context).setText(getAppBarTitle(_tabPos), 32.0, 'Lovers Quarrel'),
-            backgroundColor: Color(0xAB581d4c)),
 
-        body: _isDashOrBookingDetailsView(_tabPos),
+            bottomNavigationBar: BottomAppBar(
+                shape: CircularNotchedRectangle(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    IconButton(
+                        icon: Icon(Icons.dashboard),
+                        padding: EdgeInsets.fromLTRB(32.0, 0, 32.0, 0),
+                        color: _setColorForDashboard(_tabPos),
+                        onPressed: () => _onTabTapped(0)
+                    ),
+                    IconButton(
+                        icon: Icon(Icons.details),
+                        padding: EdgeInsets.fromLTRB(32.0, 0, 32.0, 0),
+                        color: _setColorForBookingDetails(_tabPos),
+                        onPressed: () => _onTabTapped(1)
+                    ),
+                  ],
+                )
+            )
+        ),
 
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: Color(0xFF841d58),
-          child: Icon(Icons.add, color: Colors.black),
-          onPressed: () => startNewBooking(),
-          elevation: 24.0,
-      ),
-
-      bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.dashboard),
-              padding: EdgeInsets.fromLTRB(32.0, 0, 32.0, 0),
-              color: _setColorForDashboard(_tabPos),
-              onPressed: () => _itemTapped(0)
-            ),
-            IconButton(
-              icon: Icon(Icons.details),
-              padding: EdgeInsets.fromLTRB(32.0, 0, 32.0, 0),
-              color: _setColorForBookingDetails(_tabPos),
-              onPressed: () => _itemTapped(1)
-            ),
-          ],
-        )
-      )
+        _ripple(),
+      ],
     );
   }
 
-  Future startNewBooking() async {
-    await BeautyBlissUtils(mContext: context).routeResultWidget("/NewBooking");
-    setState(() {
-      _dashboardLayout();
+  void _onFabTap() async {
+    setState(() => rect = RectGetter.getRectFromKey(rectGetterKey));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() => rect = rect.inflate(1.3 * MediaQuery.of(context).size.longestSide));
+      Future.delayed(animationDuration + delay, _startNewBooking);
     });
+  }
+
+  Widget _ripple() {
+    if (rect == null) {
+      return Container();
+    }
+    return AnimatedPositioned(
+      duration: animationDuration,
+      left: rect.left,
+      right: MediaQuery.of(context).size.width - rect.right,
+      top: rect.top,
+      bottom: MediaQuery.of(context).size.height - rect.bottom,
+      child: Container(decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.grey[900],
+        ),
+      ),
+    );
+  }
+
+  Future _startNewBooking() async {
+    await BeautyBlissUtils(mContext: context).routeWidgetForResultBack(NewBooking())
+        .then((_) => setState(() => rect = null));
   }
 
   Widget _dashboardLayout() {
@@ -163,7 +199,7 @@ class DashboardStateFul extends State<Dashboard> {
   Widget _BookDetailsLayout(){
   }
 
-  void _itemTapped(int pos) {
+  void _onTabTapped(int pos) {
     setState(() {
       this._tabPos = pos;
     });

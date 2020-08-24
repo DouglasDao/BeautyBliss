@@ -15,19 +15,23 @@ class BeautyBlissUtils {
 
   BeautyBlissUtils({this.mContext});
 
-  void routeWidget(Widget screen) {
-    Navigator.of(mContext).push(_createRoute(screen));
+  void routeWidgetWithSlide(Widget screen) {
+    Navigator.of(mContext).push(_createRouteSlideTransition(screen));
   }
 
-  Future routeResultWidget(String screen) async {
-    return await Navigator.pushNamed(mContext, screen);
+  void routeWidgetWithScale(Widget screen) {
+    Navigator.of(mContext).push(_createRouteScaleTransition(screen));
+  }
+
+  Future routeWidgetForResultBack(Widget screen) async {
+    return await Navigator.of(mContext).push(MaterialPageRoute(builder: (context) => screen));
   }
 
   void materialRouteWidget(Widget routeScreen, Object data) {
     Navigator.push(mContext, MaterialPageRoute(builder: (context) => routeScreen, settings: RouteSettings(arguments: data)));
   }
 
-  Route _createRoute(Widget screen) {
+  Route _createRouteSlideTransition(Widget screen) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => screen,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -40,6 +44,15 @@ class BeautyBlissUtils {
           child: child,
         );
       });
+  }
+
+  Route _createRouteScaleTransition(Widget screen) {
+    return PageRouteBuilder(
+      transitionDuration: Duration(seconds: 1),
+      pageBuilder: (context, animation, secondaryAnimation) => screen,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return ScaleTransition(alignment: Alignment.bottomCenter, scale: animation, child: child);
+        });
   }
 
   void showSnackBar(GlobalKey<ScaffoldState> globalKey, String msg) {
